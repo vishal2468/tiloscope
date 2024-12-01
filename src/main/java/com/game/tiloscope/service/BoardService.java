@@ -5,13 +5,19 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.game.tiloscope.model.entity.Board;
+import com.game.tiloscope.repository.BoardRepository;
 
 @Service
 public class BoardService {
 
+    private BoardRepository boardRepository;
+    
+    public BoardService(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
     public Board findById(UUID boardId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        return boardRepository.findById(boardId).orElseThrow();
     }
 
 }
