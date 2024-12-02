@@ -19,6 +19,7 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
+    
     String name;
     String description;
     int rows;

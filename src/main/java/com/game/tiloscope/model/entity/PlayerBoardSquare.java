@@ -3,6 +3,8 @@ package com.game.tiloscope.model.entity;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,10 +20,12 @@ public class PlayerBoardSquare {
     UUID id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "player_board_id")
     PlayerBoard playerBoard;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "square_id")
     Square square;
 
