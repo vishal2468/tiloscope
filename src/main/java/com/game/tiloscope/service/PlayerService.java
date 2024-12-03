@@ -20,4 +20,10 @@ public class PlayerService {
         return playerRepository.findById(playerId).orElseThrow();
     }
 
+    public Player creatPlayer() {
+        Player player = new Player();
+        player.setName("vishal");
+        return playerRepository.save(player);
+    }
+
 }

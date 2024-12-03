@@ -31,7 +31,7 @@ public class PlayerBoard {
     @JoinColumn(name = "board_id")
     Board board;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "playerBoard" , cascade = CascadeType.ALL)
     @JsonManagedReference
-    List<PlayerBoardSquare> playerBoardSquare;
+    List<PlayerBoardSquare> playerBoardSquares;
 }

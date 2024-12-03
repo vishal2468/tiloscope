@@ -26,7 +26,7 @@ public class Board {
     int cols;
     int level;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     @JsonManagedReference
     List<Square> squares;
 }

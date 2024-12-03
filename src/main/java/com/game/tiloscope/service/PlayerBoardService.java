@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.game.tiloscope.factory.PlayerBoardFactory;
 import com.game.tiloscope.model.entity.Board;
 import com.game.tiloscope.model.entity.Player;
+import com.game.tiloscope.model.entity.PlayerBoard;
 import com.game.tiloscope.repository.PlayerBoardRepository;
 
 @Service
@@ -25,10 +26,9 @@ public class PlayerBoardService {
         this.playerBoardFactory = playerBoardFactory;
     }
 
-    public void createPlayerBoard(UUID playerId, UUID boardId) {
+    public PlayerBoard createPlayerBoard(UUID playerId, UUID boardId) {
         Player p = playerService.findById(playerId);
         Board b = boardService.findById(boardId);
-        playerBoardFactory.getPlayerBoard(p, b);
-        playerBoardRepository.save(playerBoardFactory.getPlayerBoard(p, b));
+        return playerBoardRepository.save(playerBoardFactory.createPlayerBoard(p, b));
     }
 }

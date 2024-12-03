@@ -3,8 +3,9 @@ package com.game.tiloscope.controller;
 import com.game.tiloscope.factory.BoardFactory;
 import com.game.tiloscope.model.entity.Board;
 import com.game.tiloscope.repository.BoardRepository;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @RestController
@@ -18,7 +19,7 @@ public class BoardController {
         this.boardRepository = boardRepository;
     }
 
-    @PostMapping("/board")
+    @GetMapping("/board")
     public Board createBoard(){
         return boardRepository.save(boardFactory.getBoard(2, 2));
     }

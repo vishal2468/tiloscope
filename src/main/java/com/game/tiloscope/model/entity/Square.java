@@ -31,7 +31,7 @@ public class Square {
     @JsonBackReference
     Board board;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "square" , cascade = CascadeType.ALL)
     @JsonManagedReference
     List<PlayerBoardSquare> playerBoardSquare;
 }

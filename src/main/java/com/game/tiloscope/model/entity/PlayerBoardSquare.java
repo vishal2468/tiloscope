@@ -12,8 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
 @Entity
+@Data
 public class PlayerBoardSquare {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +23,7 @@ public class PlayerBoardSquare {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "player_board_id")
+    @JoinColumn(name = "player_board_id" , nullable = false)
     PlayerBoard playerBoard;
 
     @ManyToOne
@@ -29,6 +31,6 @@ public class PlayerBoardSquare {
     @JoinColumn(name = "square_id")
     Square square;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "playerBoardSquares")
     List<Tile> tiles;
 }
