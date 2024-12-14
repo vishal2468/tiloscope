@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.game.tiloscope.model.entity.Player;
+import com.game.tiloscope.model.entity.Tile;
 
 @Repository
-public interface PlayerRepository extends CrudRepository<Player,UUID>{
+public interface TileRepository extends CrudRepository<Tile,UUID>{
     
 }

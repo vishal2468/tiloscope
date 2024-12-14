@@ -12,8 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.Data;
 
 @Entity
+@Data
 public class Tile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +23,7 @@ public class Tile {
 
     String name;
     String description;
+    String html;
 
     @ManyToMany(cascade = {
         CascadeType.PERSIST,

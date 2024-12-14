@@ -20,7 +20,7 @@ public class PlayerService {
         return playerRepository.findById(playerId).orElseThrow();
     }
 
-    public Player creatPlayer() {
+    public Player createPlayer() {
         Player player = new Player();
         player.setName("vishal");
         return playerRepository.save(player);
