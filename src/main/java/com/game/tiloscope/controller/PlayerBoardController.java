@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -21,6 +23,11 @@ public class PlayerBoardController {
 
     public PlayerBoardController( PlayerBoardService playerBoardService) {
         this.playerBoardService = playerBoardService;
+    }
+
+    @GetMapping("/playerboard/{playerBoardId}")
+    public PlayerBoard createBoard(@PathVariable String playerBoardId ){
+        return playerBoardService.getPlayerBoard(UUID.fromString(playerBoardId));
     }
 
     @PostMapping("/playerboard/{playerId}/{boardId}")

@@ -1,9 +1,10 @@
 package com.game.tiloscope.model.entity;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,5 +33,6 @@ public class PlayerBoardSquare {
     Square square;
 
     @ManyToMany(mappedBy = "playerBoardSquares")
-    List<Tile> tiles;
+    @JsonManagedReference
+    Set<Tile> tiles;
 }

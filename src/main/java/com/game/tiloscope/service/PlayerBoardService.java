@@ -1,7 +1,9 @@
 package com.game.tiloscope.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -52,11 +54,15 @@ public class PlayerBoardService {
         List<PlayerBoardSquare> playerBoardSquares = new ArrayList<>();
         for (PlayerBoardSquareUpdateRequest square : playerBoardUpdateRequest.getPlayerBoardSquareUpdateRequests()) {
             PlayerBoardSquare playerBoardSquare = playerBoardSquareRepository.findById(UUID.fromString(square.getPlayerBoardSquareId())).orElseThrow();
-            List<Tile> tiles = new ArrayList<>();
+            Set<Tile> tiles = new HashSet<>();
             tileRepository.findAllById(square.getTileIds().stream().map(UUID::fromString).toList()).forEach(tiles::add);
             playerBoardSquare.setTiles(tiles);
             playerBoardSquares.add(playerBoardSquare);
         }
         playerBoardSquareRepository.saveAll(playerBoardSquares);
+    }
+
+    public PlayerBoard getPlayerBoard(UUID playerBoardId) {
+        return playerBoardRepository.findById(playerBoardId).orElseThrow();
     }
 }

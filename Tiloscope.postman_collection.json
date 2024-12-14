@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "e2e74bd7-392a-488f-8ab8-a6b6f2103680",
+		"name": "Tiloscope",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22636620",
+		"_collection_link": "https://www.postman.com/vishal2468/workspace/ot-hackathon/collection/22636620-e2e74bd7-392a-488f-8ab8-a6b6f2103680?action=share&source=collection_link&creator=22636620"
+	},
+	"item": [
+		{
+			"name": "Create template board",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/board/3/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"board",
+						"3",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create player",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/player/vishal",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"player",
+						"vishal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create player board",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/playerboard/a8ef8136-409c-4954-b2ec-2695ec63da7d/c14d93ec-b328-4d97-8241-2221744e8261",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playerboard",
+						"a8ef8136-409c-4954-b2ec-2695ec63da7d",
+						"c14d93ec-b328-4d97-8241-2221744e8261"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create tile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"t1\",\n    \"description\":\"d1\",\n    \"html\":\"html\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/tile",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update player board",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerBoardId\":\"bf24df3c-413d-4522-a16a-74b1a9125264\",\n\t\t\"playerBoardSquareUpdateRequests\":[\n\t\t\t{\n\t\t\t\t\"playerBoardSquareId\":\"d3112965-d8c3-4920-a444-5b2525a4c9b5\",\n\t\t\t\t\"tileIds\":[\n\t\t\t\t\t\"fcb44c98-dfa7-48de-9ed1-6c373afb57b2\"\n\t\t\t\t]\n\t\t\t}\n\t\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/playerboard",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playerboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Player Board",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/playerboard/bf24df3c-413d-4522-a16a-74b1a9125264",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playerboard",
+						"bf24df3c-413d-4522-a16a-74b1a9125264"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add player tile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/player/a8ef8136-409c-4954-b2ec-2695ec63da7d/tile/53acf290-653b-4844-b0ea-7c956d86e36e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"player",
+						"a8ef8136-409c-4954-b2ec-2695ec63da7d",
+						"tile",
+						"53acf290-653b-4844-b0ea-7c956d86e36e"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
