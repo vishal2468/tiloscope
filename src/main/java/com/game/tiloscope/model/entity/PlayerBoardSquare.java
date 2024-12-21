@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +36,11 @@ public class PlayerBoardSquare {
     @ManyToMany(mappedBy = "playerBoardSquares")
     @JsonManagedReference
     Set<Tile> tiles;
+
+    @JsonProperty("squareId")
+    public UUID getSquareId() {
+        return square != null ? square.getId() : null;
+    }
 
     @Override
     public boolean equals(Object obj) {

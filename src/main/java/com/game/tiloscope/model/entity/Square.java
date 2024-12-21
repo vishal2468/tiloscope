@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -33,5 +34,6 @@ public class Square {
 
     @OneToMany(mappedBy = "square" , cascade = CascadeType.ALL)
     @JsonManagedReference
+    @JsonIgnore
     List<PlayerBoardSquare> playerBoardSquare;
 }
