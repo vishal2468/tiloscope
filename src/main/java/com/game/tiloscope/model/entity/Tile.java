@@ -38,6 +38,7 @@ public class Tile {
         CascadeType.PERSIST,
         CascadeType.MERGE
       })
+    @JsonBackReference
     @JoinTable(name = "tile_join_player_board_square", joinColumns = @JoinColumn(name = "tile_id"), inverseJoinColumns = @JoinColumn(name = "player_board_square_id"))
     Set<PlayerBoardSquare> playerBoardSquares;
 

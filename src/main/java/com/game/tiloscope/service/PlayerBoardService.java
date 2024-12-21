@@ -23,12 +23,12 @@ import com.game.tiloscope.repository.TileRepository;
 @Service
 public class PlayerBoardService {
 
-    private PlayerBoardRepository playerBoardRepository;
-    private PlayerService playerService;
-    private BoardService boardService;
-    private PlayerBoardFactory playerBoardFactory;
-    private PlayerBoardSquareRepository playerBoardSquareRepository;
-    private TileRepository tileRepository;
+    private final PlayerBoardRepository playerBoardRepository;
+    private final PlayerService playerService;
+    private final BoardService boardService;
+    private final PlayerBoardFactory playerBoardFactory;
+    private final PlayerBoardSquareRepository playerBoardSquareRepository;
+    private final TileRepository tileRepository;
 
 
     public PlayerBoardService(PlayerBoardRepository playerBoardRepository, PlayerService playerService,
@@ -49,20 +49,18 @@ public class PlayerBoardService {
         return playerBoardRepository.save(playerBoardFactory.createPlayerBoard(p, b));
     }
 
-    public void updatePlayerBoard(PlayerBoardUpdateRequest playerBoardUpdateRequest) {
-        // update all the player board square
-        List<PlayerBoardSquare> playerBoardSquares = new ArrayList<>();
-        for (PlayerBoardSquareUpdateRequest square : playerBoardUpdateRequest.getPlayerBoardSquareUpdateRequests()) {
-            PlayerBoardSquare playerBoardSquare = playerBoardSquareRepository.findById(UUID.fromString(square.getPlayerBoardSquareId())).orElseThrow();
-            Set<Tile> tiles = new HashSet<>();
-            tileRepository.findAllById(square.getTileIds().stream().map(UUID::fromString).toList()).forEach(tiles::add);
-            playerBoardSquare.setTiles(tiles);
-            playerBoardSquares.add(playerBoardSquare);
-        }
-        playerBoardSquareRepository.saveAll(playerBoardSquares);
-    }
-
     public PlayerBoard getPlayerBoard(UUID playerBoardId) {
         return playerBoardRepository.findById(playerBoardId).orElseThrow();
+    }
+
+    public PlayerBoardSquare updatePlayerBoardSquare(String playerBoardSquareId, List<String> tileIds) {
+        PlayerBoardSquare playerBoardSquare = playerBoardSquareRepository.findById(UUID.fromString(playerBoardSquareId)).orElseThrow();
+        Set<Tile> tiles = new HashSet<>();
+        tileRepository.findAllById(tileIds.stream().map(UUID::fromString).toList()).forEach(tiles::add);
+        tiles.forEach(tile->tile.getPlayerBoardSquares().add(playerBoardSquare));
+        tileRepository.saveAll(tiles);
+        playerBoardSquare.setTiles(tiles);
+        playerBoardSquareRepository.save(playerBoardSquare);
+        return playerBoardSquare;
     }
 }

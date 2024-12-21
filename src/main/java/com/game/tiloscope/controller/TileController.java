@@ -11,9 +11,8 @@ import com.game.tiloscope.repository.TileRepository;
 @RestController
 public class TileController {
 
-    private TileRepository tileRepository;
-
-
+    private final TileRepository tileRepository;
+    
     public TileController(TileRepository tileRepository) {
         this.tileRepository = tileRepository;
     }

@@ -17,11 +17,11 @@ public class PlayerBoardFactory {
         PlayerBoard playerBoard = new PlayerBoard();
         playerBoard.setPlayer(player);
         playerBoard.setBoard(board);
-        playerBoard.setPlayerBoardSquares(createPlayerBoardSquares(playerBoard, board, player));
+        playerBoard.setPlayerBoardSquares(createPlayerBoardSquares(playerBoard, board));
         return playerBoard;
     }
 
-    public List<PlayerBoardSquare> createPlayerBoardSquares(PlayerBoard playerBoard , Board board , Player player){
+    public List<PlayerBoardSquare> createPlayerBoardSquares(PlayerBoard playerBoard , Board board){
         List<Square> squares = board.getSquares();
         List<PlayerBoardSquare> playerBoardSquares = new ArrayList<>();
         for(Square square : squares){

@@ -12,8 +12,8 @@ import com.game.tiloscope.repository.TileRepository;
 @Service
 public class PlayerService {
 
-    private PlayerRepository playerRepository;
-    private TileRepository tileRepository;
+    private final PlayerRepository playerRepository;
+    private final TileRepository tileRepository;
 
     public PlayerService(PlayerRepository playerRepository , TileRepository tileRepository){
         this.playerRepository = playerRepository;

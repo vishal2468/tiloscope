@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 public class BoardController {
 
-    private BoardFactory boardFactory;
-    private BoardRepository boardRepository;
+    private final BoardFactory boardFactory;
+    private final BoardRepository boardRepository;
 
     public BoardController( BoardFactory boardFactory, BoardRepository boardRepository) {
         this.boardFactory = boardFactory;
