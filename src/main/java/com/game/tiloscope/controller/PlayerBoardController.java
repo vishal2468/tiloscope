@@ -24,7 +24,7 @@ public class PlayerBoardController {
     }
 
     @GetMapping("/playerboard/{playerBoardId}")
-    public PlayerBoard createBoard(@PathVariable String playerBoardId ){
+    public PlayerBoard getPlayerBoard(@PathVariable String playerBoardId ){
         return playerBoardService.getPlayerBoard(UUID.fromString(playerBoardId));
     }
 
@@ -32,6 +32,7 @@ public class PlayerBoardController {
     public PlayerBoard createBoard(@PathVariable String boardId , @PathVariable String playerId){
         return playerBoardService.createPlayerBoard(UUID.fromString(playerId), UUID.fromString(boardId));
     }
+
     @PutMapping("/playerboard")
     public PlayerBoardSquare updatePlayerBoard(@RequestBody PlayerBoardSquareUpdateRequest squareUpdate ){
         return playerBoardService.updatePlayerBoardSquare(squareUpdate.getPlayerBoardSquareId() , squareUpdate.getTileIds());

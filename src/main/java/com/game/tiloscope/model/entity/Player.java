@@ -19,6 +19,9 @@ public class Player {
     UUID id;
 
     String name;
+    String email;
+    String password;
+    String photoUrl;
     String description;
 
     @ManyToMany(mappedBy="players")

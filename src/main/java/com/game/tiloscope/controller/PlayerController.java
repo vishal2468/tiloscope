@@ -1,5 +1,7 @@
 package com.game.tiloscope.controller;
 
+import com.game.tiloscope.model.request.RegisterRequestModel;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.game.tiloscope.model.entity.Player;
@@ -20,9 +22,13 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
-    @PostMapping("/player/{name}")
-    public Player createPlayer(@PathVariable String name) {
-        return playerService.createPlayer(name);
+    @PostMapping("/createPlayer")
+    public Player createPlayer(@RequestBody RegisterRequestModel registerRequestModel) {
+        Player player = playerService.findByEmail(registerRequestModel.getEmail());
+        if(null != player) {
+            throw new RuntimeException("Player already exists with this email");
+        }
+        return playerService.createPlayer(registerRequestModel);
     }
 
     @PostMapping("/player/{playerId}/tile/{tileId}")
