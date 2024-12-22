@@ -5,16 +5,12 @@ import com.game.tiloscope.model.entity.PlayerBoardSquare;
 import com.game.tiloscope.model.entity.PlayerBoardSquareUpdateRequest;
 import com.game.tiloscope.service.PlayerBoardService;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
+@CrossOrigin
 public class PlayerBoardController {
 
     private final PlayerBoardService playerBoardService;

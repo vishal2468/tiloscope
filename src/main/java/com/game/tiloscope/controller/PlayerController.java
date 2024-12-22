@@ -1,19 +1,16 @@
 package com.game.tiloscope.controller;
 
 import com.game.tiloscope.model.request.RegisterRequestModel;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.game.tiloscope.model.entity.Player;
 import com.game.tiloscope.service.PlayerService;
 
 import java.util.UUID;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
 
 @RestController
+@CrossOrigin
 public class PlayerController {
 
     private final PlayerService playerService;
