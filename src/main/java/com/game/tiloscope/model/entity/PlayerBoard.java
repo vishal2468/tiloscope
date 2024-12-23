@@ -34,4 +34,6 @@ public class PlayerBoard {
     @OneToMany(mappedBy = "playerBoard" , cascade = CascadeType.ALL)
     @JsonManagedReference
     List<PlayerBoardSquare> playerBoardSquares;
+
+    int vote;
 }
