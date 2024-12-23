@@ -3,6 +3,7 @@ package com.game.tiloscope.model.entity;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,9 +20,16 @@ public class Player {
     UUID id;
 
     String name;
+    String email;
+
+    @JsonIgnore
+    String password;
+
+    String photoUrl;
     String description;
 
     @ManyToMany(mappedBy="players")
+    @JsonIgnore
     Set<Tile> tiles;
 
     @Override

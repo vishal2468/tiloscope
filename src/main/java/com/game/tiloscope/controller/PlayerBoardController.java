@@ -6,17 +6,18 @@ import com.game.tiloscope.model.entity.PlayerBoardSquareUpdateRequest;
 import com.game.tiloscope.repository.PlayerBoardRepository;
 import com.game.tiloscope.service.PlayerBoardService;
 
+import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.ServletException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 public class PlayerBoardController {
 
     private final PlayerBoardService playerBoardService;
@@ -28,7 +29,7 @@ public class PlayerBoardController {
     }
 
     @GetMapping("/playerboard/{playerBoardId}")
-    public PlayerBoard createBoard(@PathVariable String playerBoardId ){
+    public PlayerBoard getPlayerBoard(@PathVariable String playerBoardId ){
         return playerBoardService.getPlayerBoard(UUID.fromString(playerBoardId));
     }
 
@@ -37,7 +38,7 @@ public class PlayerBoardController {
         return playerBoardService.createPlayerBoard(UUID.fromString(playerId), UUID.fromString(boardId));
     }
 
-    @PutMapping("/playerboard/square")
+    @PutMapping("/playerboard")
     public PlayerBoardSquare updatePlayerBoard(@RequestBody PlayerBoardSquareUpdateRequest squareUpdate ){
         return playerBoardService.updatePlayerBoardSquare(squareUpdate.getPlayerBoardSquareId() , squareUpdate.getTileIds());
     }
