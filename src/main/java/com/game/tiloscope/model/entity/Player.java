@@ -1,12 +1,9 @@
 package com.game.tiloscope.model.entity;
 
 import java.util.Set;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
@@ -16,21 +13,24 @@ import lombok.Data;
 public class Player {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    private String userName;
 
-    String name;
-    String email;
+    private String name;
+    private String email;
 
     @JsonIgnore
-    String password;
+    private String password;
 
-    String photoUrl;
-    String description;
+    private String roles = "ROLE_USER";
+
+    private String photoUrl;
+    private String description;
 
     @ManyToMany(mappedBy="players")
     @JsonIgnore
-    Set<Tile> tiles;
+    private Set<Tile> tiles;
+
+    private boolean isActive;
 
     @Override
     public boolean equals(Object obj) {
@@ -41,10 +41,10 @@ public class Player {
         if (getClass() != obj.getClass())
             return false;
         Player other = (Player) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (userName == null) {
+            if (other.userName != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!userName.equals(other.userName))
             return false;
         return true;
     }
@@ -53,7 +53,7 @@ public class Player {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((userName == null) ? 0 : userName.hashCode());
         return result;
     }
     

@@ -1,10 +1,11 @@
 package com.game.tiloscope.model.request;
 
+import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Data
-public class RegisterRequestModel {
-    String name;
+public class RegisterPlayerRequest {
+    String userName;
     String email;
     String password;
     String photoUrl;

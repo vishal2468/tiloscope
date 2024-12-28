@@ -1,6 +1,5 @@
 package com.game.tiloscope.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,8 +12,6 @@ import com.game.tiloscope.model.entity.Board;
 import com.game.tiloscope.model.entity.Player;
 import com.game.tiloscope.model.entity.PlayerBoard;
 import com.game.tiloscope.model.entity.PlayerBoardSquare;
-import com.game.tiloscope.model.entity.PlayerBoardSquareUpdateRequest;
-import com.game.tiloscope.model.entity.PlayerBoardUpdateRequest;
 import com.game.tiloscope.model.entity.Tile;
 import com.game.tiloscope.repository.PlayerBoardRepository;
 import com.game.tiloscope.repository.PlayerBoardSquareRepository;
@@ -43,8 +40,8 @@ public class PlayerBoardService {
 
     }
 
-    public PlayerBoard createPlayerBoard(UUID playerId, UUID boardId) {
-        Player p = playerService.findById(playerId);
+    public PlayerBoard createPlayerBoard(String userName, UUID boardId) {
+        Player p = playerService.findByUserName(userName);
         Board b = boardService.findById(boardId);
         return playerBoardRepository.save(playerBoardFactory.createPlayerBoard(p, b));
     }
