@@ -30,8 +30,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	//  Temporary explicit version to fix Thymeleaf bug
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
-	implementation 'com.google.cloud:spring-cloud-gcp-dependencies:5.8.0'
-	implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-postgresql:5.8.0'
 	compileOnly 'org.projectlombok:lombok'
 	implementation 'org.apache.commons:commons-lang3:3.0'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -41,7 +39,3 @@ dependencies {
 	implementation 'org.postgresql:postgresql:42.7.4'
 
 }
-
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}
