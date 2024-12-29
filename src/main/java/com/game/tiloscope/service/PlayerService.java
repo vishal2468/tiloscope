@@ -1,9 +1,9 @@
 package com.game.tiloscope.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.game.tiloscope.model.request.RegisterPlayerRequest;
-import com.game.tiloscope.utility.HashMakerUtility;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,34 +17,33 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final TileRepository tileRepository;
-    private final HashMakerUtility hashMakerUtility;
 
-    public PlayerService(PlayerRepository playerRepository , TileRepository tileRepository, HashMakerUtility hashMakerUtility){
+    public PlayerService(PlayerRepository playerRepository , TileRepository tileRepository){
         this.playerRepository = playerRepository;
         this.tileRepository = tileRepository;
-        this.hashMakerUtility = hashMakerUtility;
     }
 
-    public Player findByUserName(String userName) {
-        return playerRepository.findByUserName(userName).orElseThrow();
+    public Player findByUserName(String email) {
+        return playerRepository.findByEmail(email).orElseThrow();
     }
 
-    public Player findByEmail(String email) {
+    public Optional<Player> findByEmail(String email) {
         return playerRepository.findByEmail(email);
     }
 
     public Player createPlayer(RegisterPlayerRequest registerPlayerRequest) {
         Player player = new Player();
-        player.setUserName(registerPlayerRequest.getUserName());
         player.setEmail(registerPlayerRequest.getEmail());
+        player.setName(registerPlayerRequest.getName());
+        player.setActive(true);
         player.setPassword(NoOpPasswordEncoder.getInstance().encode(registerPlayerRequest.getPassword()));
         player.setPhotoUrl(registerPlayerRequest.getPhotoUrl());
         player.setDescription(registerPlayerRequest.getDescription());
         return playerRepository.save(player);
     }
 
-    public Player addTile(String userName , UUID tileId) {
-        Player player = playerRepository.findByUserName(userName).orElseThrow();
+    public Player addTile(String email , UUID tileId) {
+        Player player = playerRepository.findByEmail(email).orElseThrow();
         Tile tile = tileRepository.findById(tileId).orElseThrow();
         player.getTiles().add(tile);
         tile.getPlayers().add(player);

@@ -18,6 +18,7 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
+                .requestMatchers("/player").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(withDefaults())

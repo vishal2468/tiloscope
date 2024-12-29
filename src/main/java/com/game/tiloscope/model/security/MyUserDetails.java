@@ -13,16 +13,14 @@ import com.game.tiloscope.model.entity.Player;
 
 public class MyUserDetails implements UserDetails {
 
-    private String userName;
+    private String email;
     private String password;
-    private boolean active;
     private List<GrantedAuthority> authorities;
     private transient Player user;
 
     public MyUserDetails(Player user) {
-        this.userName = user.getUserName();
+        this.email = user.getEmail();
         this.password = user.getPassword();
-        this.active = user.isActive();
         this.authorities = Arrays.stream(user.getRoles().split(",")).map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
         this.user = user;
@@ -51,7 +49,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override

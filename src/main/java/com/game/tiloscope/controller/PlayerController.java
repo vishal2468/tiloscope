@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.game.tiloscope.model.entity.Player;
 import com.game.tiloscope.service.PlayerService;
 
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -21,16 +22,16 @@ public class PlayerController {
 
     @PostMapping("/player")
     public Player createPlayer(@RequestBody RegisterPlayerRequest registerRequestModel) {
-        Player player = playerService.findByEmail(registerRequestModel.getEmail());
-        if(null != player) {
+        Optional<Player> player = playerService.findByEmail(registerRequestModel.getEmail());
+        if(player.isPresent()) {
             throw new RuntimeException("Player already exists with this email");
         }
         return playerService.createPlayer(registerRequestModel);
     }
 
-    @PostMapping("/player/{userName}/tile/{tileId}")
-    public Player addTile(@PathVariable String userName, @PathVariable String tileId) {
-        return playerService.addTile(userName , UUID.fromString(tileId));
+    @PostMapping("/player/{email}/tile/{tileId}")
+    public Player addTile(@PathVariable String email, @PathVariable String tileId) {
+        return playerService.addTile(email , UUID.fromString(tileId));
     }
 
 }
