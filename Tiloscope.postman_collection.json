@@ -8,8 +8,64 @@
 	},
 	"item": [
 		{
+			"name": "Create player",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Stores the player id in an environment or global variable",
+							"var playerId = responseBody.id;",
+							"pm.globals.set(\"playerId\", playerId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"vishalpoddar2468@gmail.com\",\n    \"name\":\"vishal\",\n    \"password\": \"Nume123$\",\n    \"photoUrl\": \"ksksks\",\n    \"description\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/player",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"player"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create template board",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Nume123$",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "vishalpoddar2468@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"url": {
@@ -28,39 +84,20 @@
 			"response": []
 		},
 		{
-			"name": "Create player",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/player/vishal",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"player",
-						"vishal"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Create player board",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/playerboard/a8ef8136-409c-4954-b2ec-2695ec63da7d/c14d93ec-b328-4d97-8241-2221744e8261",
+					"raw": "localhost:8080/playerboard/{{player}}/{{board}}",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"playerboard",
-						"a8ef8136-409c-4954-b2ec-2695ec63da7d",
-						"c14d93ec-b328-4d97-8241-2221744e8261"
+						"{{player}}",
+						"{{board}}"
 					]
 				}
 			},
@@ -69,6 +106,21 @@
 		{
 			"name": "create tile",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Nume123$",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "vishalpoddar2468@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -94,13 +146,34 @@
 			"response": []
 		},
 		{
+			"name": "Add player tile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/player/{{player}}/tile/{{tile}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"player",
+						"{{player}}",
+						"tile",
+						"{{tile}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "update player board",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"playerBoardId\":\"bf24df3c-413d-4522-a16a-74b1a9125264\",\n\t\t\"playerBoardSquareUpdateRequests\":[\n\t\t\t{\n\t\t\t\t\"playerBoardSquareId\":\"d3112965-d8c3-4920-a444-5b2525a4c9b5\",\n\t\t\t\t\"tileIds\":[\n\t\t\t\t\t\"fcb44c98-dfa7-48de-9ed1-6c373afb57b2\"\n\t\t\t\t]\n\t\t\t}\n\t\t]\n}",
+					"raw": "{\n\t\"playerBoardSquareId\": \"{{playerboardsquare}}\",\n\t\"tileIds\": [\n\t\t\"{{tile}}\"\n\t]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -126,39 +199,80 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/playerboard/bf24df3c-413d-4522-a16a-74b1a9125264",
+					"raw": "localhost:8080/playerboard/{{playerboard}}",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"playerboard",
-						"bf24df3c-413d-4522-a16a-74b1a9125264"
+						"{{playerboard}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Add player tile",
+			"name": "get all player boards",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/player/a8ef8136-409c-4954-b2ec-2695ec63da7d/tile/53acf290-653b-4844-b0ea-7c956d86e36e",
+					"raw": "localhost:8080/playerboard",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"player",
-						"a8ef8136-409c-4954-b2ec-2695ec63da7d",
-						"tile",
-						"53acf290-653b-4844-b0ea-7c956d86e36e"
+						"playerboard"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "player",
+			"value": "b8a1549c-8784-4510-874c-82deb0f19cb2"
+		},
+		{
+			"key": "board",
+			"value": "dcce9d4f-8b53-408e-8057-106537881591"
+		},
+		{
+			"key": "playerboard",
+			"value": "502a55a8-2504-420d-a39e-919fc155e678"
+		},
+		{
+			"key": "playerboardsquare",
+			"value": "a6be0694-9264-4793-b4fa-4d2252873bb0"
+		},
+		{
+			"key": "tile",
+			"value": "45d5a780-4d34-4d40-8bcf-9cf0f94bb62d"
 		}
 	]
 }

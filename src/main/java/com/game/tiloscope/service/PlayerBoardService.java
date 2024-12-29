@@ -40,8 +40,8 @@ public class PlayerBoardService {
 
     }
 
-    public PlayerBoard createPlayerBoard(String userName, UUID boardId) {
-        Player p = playerService.findByUserName(userName);
+    public PlayerBoard createPlayerBoard(String email, UUID boardId) {
+        Player p = playerService.findByEmail(email).orElseThrow();
         Board b = boardService.findById(boardId);
         return playerBoardRepository.save(playerBoardFactory.createPlayerBoard(p, b));
     }

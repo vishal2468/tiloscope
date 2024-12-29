@@ -23,10 +23,6 @@ public class PlayerService {
         this.tileRepository = tileRepository;
     }
 
-    public Player findByUserName(String email) {
-        return playerRepository.findByEmail(email).orElseThrow();
-    }
-
     public Optional<Player> findByEmail(String email) {
         return playerRepository.findByEmail(email);
     }

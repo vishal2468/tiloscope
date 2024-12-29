@@ -32,9 +32,9 @@ public class PlayerBoardController {
         return playerBoardService.getPlayerBoard(UUID.fromString(playerBoardId));
     }
 
-    @PostMapping("/playerboard/{userName}/{boardId}")
-    public PlayerBoard createBoard(@PathVariable String boardId , @PathVariable String userName){
-        return playerBoardService.createPlayerBoard(userName, UUID.fromString(boardId));
+    @PostMapping("/playerboard/{email}/{boardId}")
+    public PlayerBoard createBoard(@PathVariable String boardId , @PathVariable String email){
+        return playerBoardService.createPlayerBoard(email, UUID.fromString(boardId));
     }
 
     @PutMapping("/playerboard")
