@@ -32,7 +32,6 @@ public class Player {
     private String description;
 
     @ManyToMany(mappedBy="players")
-    @JsonIgnore
     private Set<Tile> tiles;
 
     private boolean isActive;
