@@ -1,8 +1,7 @@
 package com.game.tiloscope.configuration;
 
 
-import com.game.tiloscope.model.security.MyUserDetails;
-import com.game.tiloscope.repository.PlayerRepository;
+import com.game.tiloscope.service.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,21 +9,14 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 @Configuration
 public class ApplicationConfiguration {
-    private final PlayerRepository userRepository;
+    private final UserDetailsService userDetailsService;
 
-    public ApplicationConfiguration(PlayerRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @Bean
-    UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username).map(MyUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public ApplicationConfiguration(MyUserDetailsService myUserDetailsService) {
+        this.userDetailsService = myUserDetailsService;
     }
 
     @Bean
@@ -36,9 +28,8 @@ public class ApplicationConfiguration {
     AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
-
         return authProvider;
     }
 }
