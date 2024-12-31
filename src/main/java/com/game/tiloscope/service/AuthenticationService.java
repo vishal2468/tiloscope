@@ -11,18 +11,14 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
     private final PlayerRepository userRepository;
 
-//     private final PasswordEncoder passwordEncoder;
-
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationService(
             PlayerRepository userRepository,
             AuthenticationManager authenticationManager
-        //     PasswordEncoder passwordEncoder
     ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
-        // this.passwordEncoder = passwordEncoder;
     }
 
     public Player authenticate(LoginUserDto input) {
