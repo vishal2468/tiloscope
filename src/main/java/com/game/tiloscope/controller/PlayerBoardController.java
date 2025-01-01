@@ -33,7 +33,7 @@ public class PlayerBoardController {
     /*
      * Create a player board using the boardId board template
      */
-    @PostMapping("{boardId}")
+    @PostMapping("/{boardId}")
     public PlayerBoard createBoard(@PathVariable String boardId , @LoggedInUser MyUserDetails userDetails){
         return playerBoardService.createPlayerBoard(userDetails.getUsername(), UUID.fromString(boardId));
     }

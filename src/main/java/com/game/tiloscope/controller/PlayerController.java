@@ -9,6 +9,7 @@ import com.game.tiloscope.service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.game.tiloscope.configuration.LoggedInUser;
 import com.game.tiloscope.model.entity.Player;
 import com.game.tiloscope.service.PlayerService;
 
@@ -55,9 +56,9 @@ public class PlayerController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    @PostMapping("/player/{email}/tile/{tileId}")
-    public Player addTile(@PathVariable String email, @PathVariable String tileId) {
-        return playerService.addTile(email , UUID.fromString(tileId));
+    @PostMapping("/player/tile/{tileId}")
+    public Player addTile(@LoggedInUser MyUserDetails userDetails, @PathVariable String tileId) {
+        return playerService.addTile(userDetails.getUser().getEmail() , UUID.fromString(tileId));
     }
 
 }

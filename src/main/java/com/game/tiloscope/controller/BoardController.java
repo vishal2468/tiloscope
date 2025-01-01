@@ -1,10 +1,8 @@
 package com.game.tiloscope.controller;
 
-import com.game.tiloscope.configuration.LoggedInUser;
 import com.game.tiloscope.factory.BoardFactory;
 import com.game.tiloscope.model.entity.Board;
 import com.game.tiloscope.model.request.CreateBoardRequest;
-import com.game.tiloscope.model.security.MyUserDetails;
 import com.game.tiloscope.repository.BoardRepository;
 
 import java.util.List;
@@ -35,7 +33,7 @@ public class BoardController {
     }
 
     @PostMapping
-    public Board createBoard(@LoggedInUser MyUserDetails userDetails , @RequestBody CreateBoardRequest board){
+    public Board createBoard(@RequestBody CreateBoardRequest board){
         return boardRepository.save(boardFactory.getBoard(board.getRows() , board.getCols()));
     }
 
