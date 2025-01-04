@@ -1,11 +1,14 @@
 package com.game.tiloscope.model.security;
 
+import com.game.tiloscope.model.entity.Player;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class LoginResponse {
+    private Player player;
     private String token;
-
     private long expiresIn;
 
     public String getToken() {
