@@ -1,18 +1,13 @@
 package com.game.tiloscope.model.entity;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -35,5 +30,18 @@ public class PlayerBoard {
     @JsonManagedReference
     List<PlayerBoardSquare> playerBoardSquares;
 
-    int vote;
+    @ManyToMany(mappedBy="likedPlayerBoards" , fetch = FetchType.EAGER)
+    Set<Player> liked;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerBoard that = (PlayerBoard) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }

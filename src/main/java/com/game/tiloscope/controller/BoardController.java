@@ -39,7 +39,7 @@ public class BoardController {
 
     @GetMapping
     public ResponseEntity<List<Board>> getAllBoard(){
-        return ResponseEntity.ok(boardRepository.findAll());
+        return ResponseEntity.ok((List<Board>) boardRepository.findAll());
     }
 
     @GetMapping("/{boardId}")
