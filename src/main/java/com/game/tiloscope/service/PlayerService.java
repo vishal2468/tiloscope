@@ -58,4 +58,7 @@ public class PlayerService {
         return player;
 
     }
+    public List<Object[]> findPlayersByCumulativeLikes(){
+        return playerRepository.findPlayersByCumulativeLikes();
+    }
 }

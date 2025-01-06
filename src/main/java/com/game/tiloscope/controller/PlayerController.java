@@ -2,6 +2,7 @@ package com.game.tiloscope.controller;
 
 import com.game.tiloscope.configuration.LoggedInUser;
 import com.game.tiloscope.model.entity.Player;
+import com.game.tiloscope.model.entity.PlayerBoard;
 import com.game.tiloscope.model.request.RegisterPlayerRequest;
 import com.game.tiloscope.model.security.LoginResponse;
 import com.game.tiloscope.model.security.LoginUserDto;
@@ -9,9 +10,14 @@ import com.game.tiloscope.model.security.MyUserDetails;
 import com.game.tiloscope.service.AuthenticationService;
 import com.game.tiloscope.service.JwtService;
 import com.game.tiloscope.service.PlayerService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -62,6 +68,14 @@ public class PlayerController {
     @PostMapping("/player/tile/{tileId}")
     public Player addTile(@LoggedInUser MyUserDetails userDetails, @PathVariable String tileId) {
         return playerService.addTile(userDetails.getUser().getEmail(), UUID.fromString(tileId));
+    }
+
+    /*
+     * Get most upvote players
+     */
+    @GetMapping("player/leaderboard")
+    public List<Object[]> leaderboard() {
+        return playerService.findPlayersByCumulativeLikes();
     }
 
 }
