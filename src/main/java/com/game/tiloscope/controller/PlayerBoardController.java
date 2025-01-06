@@ -1,11 +1,10 @@
 package com.game.tiloscope.controller;
 
 import com.game.tiloscope.configuration.LoggedInUser;
-import com.game.tiloscope.model.entity.PlayerBoard;
-import com.game.tiloscope.model.entity.PlayerBoardSquare;
-import com.game.tiloscope.model.entity.PlayerBoardSquareUpdateRequest;
+import com.game.tiloscope.model.entity.*;
 import com.game.tiloscope.model.security.MyUserDetails;
 import com.game.tiloscope.repository.PlayerBoardRepository;
+import com.game.tiloscope.repository.PlayerRepository;
 import com.game.tiloscope.service.PlayerBoardService;
 
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -24,10 +24,12 @@ public class PlayerBoardController {
 
     private final PlayerBoardService playerBoardService;
     private final PlayerBoardRepository playerBoardRepository;
+    private final PlayerRepository playerRepository;
 
-    public PlayerBoardController( PlayerBoardService playerBoardService , PlayerBoardRepository playerBoardRepository) {
+    public PlayerBoardController(PlayerBoardService playerBoardService , PlayerBoardRepository playerBoardRepository , PlayerRepository playerRepository) {
         this.playerBoardService = playerBoardService;
         this.playerBoardRepository = playerBoardRepository;
+        this.playerRepository = playerRepository;
     }
 
     /*
@@ -58,17 +60,30 @@ public class PlayerBoardController {
      * Update a player board square
      */
     @PutMapping("square")
-    public PlayerBoardSquare updatePlayerBoard(@RequestBody PlayerBoardSquareUpdateRequest squareUpdate ){
+    public PlayerBoardSquare updatePlayerBoardSquare(@RequestBody PlayerBoardSquareUpdateRequest squareUpdate ){
         return playerBoardService.updatePlayerBoardSquare(squareUpdate.getPlayerBoardSquareId() , squareUpdate.getTileIds());
+    }
+
+    /*
+     * Update a player board
+     */
+    @PutMapping
+    public PlayerBoard updatePlayerBoard(@RequestBody PlayerBoardUpdateRequest boardUpdate ){
+        boardUpdate.getPlayerBoardSquareUpdateRequests().forEach(us -> playerBoardService.updatePlayerBoardSquare(us.getPlayerBoardSquareId(),us.getTileIds()));
+        return playerBoardRepository.findById(UUID.fromString(boardUpdate.getPlayerBoardId())).orElseThrow();
     }
 
     /*
      * Upvote a player board
      */
     @PutMapping("/upvote/{playerBoardId}")
-    public PlayerBoard upvote(@PathVariable String playerBoardId) {
+    public PlayerBoard upvote(@LoggedInUser MyUserDetails myUserDetails , @PathVariable String playerBoardId) {
         PlayerBoard playerBoard = playerBoardRepository.findById(UUID.fromString(playerBoardId)).orElseThrow();
-        playerBoard.setVote(playerBoard.getVote()+1);
+        Set<Player> playersLiked = playerBoard.getLiked();
+        Player player = myUserDetails.getUser();
+        playersLiked.add(player);
+        player.getLikedPlayerBoards().add(playerBoard);
+        playerRepository.save(player);
         return playerBoardRepository.save(playerBoard);
     }
 

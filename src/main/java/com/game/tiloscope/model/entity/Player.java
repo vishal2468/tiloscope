@@ -3,12 +3,9 @@ package com.game.tiloscope.model.entity;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -35,6 +32,15 @@ public class Player {
     private Set<Tile> tiles;
 
     private boolean isActive;
+
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinTable(name = "player_join_liked_player_board", joinColumns = @JoinColumn(name = "player_id"), inverseJoinColumns = @JoinColumn(name = "player_board_id"))
+    Set<PlayerBoard> likedPlayerBoards;
 
     @Override
     public boolean equals(Object obj) {
