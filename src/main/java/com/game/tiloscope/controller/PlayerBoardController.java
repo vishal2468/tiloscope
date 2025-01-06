@@ -1,10 +1,7 @@
 package com.game.tiloscope.controller;
 
 import com.game.tiloscope.configuration.LoggedInUser;
-import com.game.tiloscope.model.entity.Player;
-import com.game.tiloscope.model.entity.PlayerBoard;
-import com.game.tiloscope.model.entity.PlayerBoardSquare;
-import com.game.tiloscope.model.entity.PlayerBoardSquareUpdateRequest;
+import com.game.tiloscope.model.entity.*;
 import com.game.tiloscope.model.security.MyUserDetails;
 import com.game.tiloscope.repository.PlayerBoardRepository;
 import com.game.tiloscope.repository.PlayerRepository;
@@ -63,8 +60,17 @@ public class PlayerBoardController {
      * Update a player board square
      */
     @PutMapping("square")
-    public PlayerBoardSquare updatePlayerBoard(@RequestBody PlayerBoardSquareUpdateRequest squareUpdate ){
+    public PlayerBoardSquare updatePlayerBoardSquare(@RequestBody PlayerBoardSquareUpdateRequest squareUpdate ){
         return playerBoardService.updatePlayerBoardSquare(squareUpdate.getPlayerBoardSquareId() , squareUpdate.getTileIds());
+    }
+
+    /*
+     * Update a player board
+     */
+    @PutMapping
+    public PlayerBoard updatePlayerBoard(@RequestBody PlayerBoardUpdateRequest boardUpdate ){
+        boardUpdate.getPlayerBoardSquareUpdateRequests().forEach(us -> playerBoardService.updatePlayerBoardSquare(us.getPlayerBoardSquareId(),us.getTileIds()));
+        return playerBoardRepository.findById(UUID.fromString(boardUpdate.getPlayerBoardId())).orElseThrow();
     }
 
     /*

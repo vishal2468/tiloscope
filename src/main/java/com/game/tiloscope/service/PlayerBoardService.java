@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.game.tiloscope.model.entity.*;
 import org.springframework.stereotype.Service;
 
 import com.game.tiloscope.factory.PlayerBoardFactory;
-import com.game.tiloscope.model.entity.Board;
-import com.game.tiloscope.model.entity.Player;
-import com.game.tiloscope.model.entity.PlayerBoard;
-import com.game.tiloscope.model.entity.PlayerBoardSquare;
-import com.game.tiloscope.model.entity.Tile;
 import com.game.tiloscope.repository.PlayerBoardRepository;
 import com.game.tiloscope.repository.PlayerBoardSquareRepository;
 import com.game.tiloscope.repository.TileRepository;
