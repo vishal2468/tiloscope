@@ -2,7 +2,6 @@ package com.game.tiloscope.controller;
 
 import com.game.tiloscope.configuration.LoggedInUser;
 import com.game.tiloscope.model.entity.Player;
-import com.game.tiloscope.model.entity.PlayerBoard;
 import com.game.tiloscope.model.request.RegisterPlayerRequest;
 import com.game.tiloscope.model.security.LoginResponse;
 import com.game.tiloscope.model.security.LoginUserDto;
@@ -10,10 +9,6 @@ import com.game.tiloscope.model.security.MyUserDetails;
 import com.game.tiloscope.service.AuthenticationService;
 import com.game.tiloscope.service.JwtService;
 import com.game.tiloscope.service.PlayerService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

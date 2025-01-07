@@ -18,15 +18,15 @@ public class PlayerBoard {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
     Player player;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "board_id")
     Board board;
 
-    @OneToMany(mappedBy = "playerBoard" , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "playerBoard" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonManagedReference
     List<PlayerBoardSquare> playerBoardSquares;
 

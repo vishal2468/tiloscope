@@ -10,7 +10,6 @@ import com.game.tiloscope.service.PlayerBoardService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
@@ -85,15 +84,6 @@ public class PlayerBoardController {
         player.getLikedPlayerBoards().add(playerBoard);
         playerRepository.save(player);
         return playerBoardRepository.save(playerBoard);
-    }
-
-    /*
-     * Get most upvoted boards
-     */
-    @GetMapping("/leaderboard")
-    public List<PlayerBoard> leaderboard(@PageableDefault(value=10, page=0 , sort = "vote", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<PlayerBoard> page = playerBoardRepository.findAll(pageable);
-        return page.getContent();
     }
 
     /*
