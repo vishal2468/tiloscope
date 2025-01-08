@@ -1,5 +1,7 @@
 package com.game.tiloscope.model.entity;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -25,6 +27,10 @@ public class PlayerBoard {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "board_id")
     Board board;
+
+    boolean visible;
+
+    LocalDateTime lastUpdated;
 
     @OneToMany(mappedBy = "playerBoard" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonManagedReference

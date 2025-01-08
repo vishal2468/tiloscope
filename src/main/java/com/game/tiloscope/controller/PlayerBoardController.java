@@ -2,6 +2,7 @@ package com.game.tiloscope.controller;
 
 import com.game.tiloscope.configuration.LoggedInUser;
 import com.game.tiloscope.model.entity.*;
+import com.game.tiloscope.model.request.PlayerBoardVisibilityRequest;
 import com.game.tiloscope.model.security.MyUserDetails;
 import com.game.tiloscope.repository.PlayerBoardRepository;
 import com.game.tiloscope.repository.PlayerRepository;
@@ -10,8 +11,11 @@ import com.game.tiloscope.service.PlayerBoardService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -58,7 +62,7 @@ public class PlayerBoardController {
     /*
      * Update a player board square
      */
-    @PutMapping("square")
+    @PutMapping("/square")
     public PlayerBoardSquare updatePlayerBoardSquare(@RequestBody PlayerBoardSquareUpdateRequest squareUpdate ){
         return playerBoardService.updatePlayerBoardSquare(squareUpdate.getPlayerBoardSquareId() , squareUpdate.getTileIds());
     }
@@ -69,7 +73,9 @@ public class PlayerBoardController {
     @PutMapping
     public PlayerBoard updatePlayerBoard(@RequestBody PlayerBoardUpdateRequest boardUpdate ){
         boardUpdate.getPlayerBoardSquareUpdateRequests().forEach(us -> playerBoardService.updatePlayerBoardSquare(us.getPlayerBoardSquareId(),us.getTileIds()));
-        return playerBoardRepository.findById(UUID.fromString(boardUpdate.getPlayerBoardId())).orElseThrow();
+        PlayerBoard playerBoard =  playerBoardRepository.findById(UUID.fromString(boardUpdate.getPlayerBoardId())).orElseThrow();
+        playerBoard.setLastUpdated(LocalDateTime.now());
+        return playerBoardRepository.save(playerBoard);
     }
 
     /*
@@ -90,9 +96,19 @@ public class PlayerBoardController {
      * Get all player boards in the game
      */
     @GetMapping
-    public ResponseEntity<List<PlayerBoard>> getAllPlayerBoards(@PageableDefault(value=10, page=0) Pageable pageable){
+    public ResponseEntity<List<PlayerBoard>> getAllPlayerBoards(@PageableDefault(value = 10, page = 0, sort = "lastUpdated", direction = Direction.DESC) Pageable pageable){
         Page<PlayerBoard> page = playerBoardRepository.findAll(pageable);
         return ResponseEntity.ok(page.getContent());
+    }
+
+    /*
+     * Set the visibility of a player board
+     */
+    @PutMapping("/visibility")
+    public ResponseEntity<PlayerBoard> setVisibility(PlayerBoardVisibilityRequest playerBoardVisibilityRequest){
+        PlayerBoard playerBoard = playerBoardRepository.findById(UUID.fromString(playerBoardVisibilityRequest.getPlayerBoardId())).orElseThrow();
+        playerBoard.setVisible(playerBoardVisibilityRequest.isVisible());
+        return ResponseEntity.ok(playerBoardRepository.save(playerBoard));
     }
 
 }
