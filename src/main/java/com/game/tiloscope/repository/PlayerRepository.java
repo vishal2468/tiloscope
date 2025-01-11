@@ -1,23 +1,25 @@
 package com.game.tiloscope.repository;
 
+import com.game.tiloscope.model.entity.Player;
+import org.springframework.data.jpa.repository.NativeQuery;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
-import com.game.tiloscope.model.entity.Player;
-
 @Repository
-public interface PlayerRepository extends CrudRepository<Player,UUID>{
+public interface PlayerRepository extends CrudRepository<Player, UUID> {
     Optional<Player> findByEmail(String username);
 
-    @Query("SELECT p, SUM(COALESCE(size(pb.liked), 0)) AS totalLikes " +
+    @NativeQuery("SELECT p,COALESCE(pb_likes.cont, 0) AS totalLikes " +
             "FROM Player p " +
-            "JOIN p.likedPlayerBoards pb " +
-            "GROUP BY p " +
-            "ORDER BY totalLikes DESC")
+            "LEFT JOIN (" +
+            "select pb.player_id, count(*) as cont from player_join_liked_player_board pjlpb " +
+            "left join player_board pb on pjlpb.player_board_id = pb.id " +
+            "group by pb.player_id" +
+            ") pb_likes ON p.id = pb_likes.player_id " +
+            "ORDER BY totalLikes desc")
     List<Object[]> findPlayersByCumulativeLikes();
 }
