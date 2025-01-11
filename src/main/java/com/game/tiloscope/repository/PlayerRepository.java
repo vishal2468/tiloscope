@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface PlayerRepository extends CrudRepository<Player, UUID> {
     Optional<Player> findByEmail(String username);
 
-    @NativeQuery("SELECT p,COALESCE(pb_likes.cont, 0) AS totalLikes " +
+    @NativeQuery("SELECT p.name, p.email, p.description, p.photo_url ,COALESCE(pb_likes.cont, 0) AS totalLikes " +
             "FROM Player p " +
             "LEFT JOIN (" +
             "select pb.player_id, count(*) as cont from player_join_liked_player_board pjlpb " +
