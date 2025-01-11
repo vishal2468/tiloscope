@@ -105,7 +105,7 @@ public class PlayerBoardController {
      * Set the visibility of a player board
      */
     @PutMapping("/visibility")
-    public ResponseEntity<PlayerBoard> setVisibility(PlayerBoardVisibilityRequest playerBoardVisibilityRequest){
+    public ResponseEntity<PlayerBoard> setVisibility(@RequestBody  PlayerBoardVisibilityRequest playerBoardVisibilityRequest){
         PlayerBoard playerBoard = playerBoardRepository.findById(UUID.fromString(playerBoardVisibilityRequest.getPlayerBoardId())).orElseThrow();
         playerBoard.setVisible(playerBoardVisibilityRequest.isVisible());
         return ResponseEntity.ok(playerBoardRepository.save(playerBoard));
