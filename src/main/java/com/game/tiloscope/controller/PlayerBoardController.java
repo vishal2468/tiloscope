@@ -92,12 +92,10 @@ public class PlayerBoardController {
         return playerBoardRepository.save(playerBoard);
     }
 
-    /*
-     * Get all player boards in the game
-     */
     @GetMapping
-    public ResponseEntity<List<PlayerBoard>> getAllPlayerBoards(@PageableDefault(value = 10, page = 0, sort = "lastUpdated", direction = Direction.DESC) Pageable pageable){
-        Page<PlayerBoard> page = playerBoardRepository.findAll(pageable);
+    public ResponseEntity<List<PlayerBoard>> getAllVisiblePlayerBoards(@PageableDefault(value = 10, page = 0, sort = "lastUpdated", direction = Direction.DESC) Pageable pageable) {
+        // Assuming the PlayerBoard entity has a 'visible' field that is a boolean.
+        Page<PlayerBoard> page = playerBoardRepository.findByVisibleTrue(pageable);
         return ResponseEntity.ok(page.getContent());
     }
 
