@@ -27,17 +27,23 @@ git clone https://github.com/vishal2468/tiloscope.git
 
 
 ### Setup PostgreSQL
+
+```bash
 psql -U postgres -c "CREATE DATABASE tiloscope;" 
 psql -U postgres -c "CREATE USER tiloscope_user WITH ENCRYPTED PASSWORD 'password';" 
 psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE tiloscope TO tiloscope_user;"
+```
 
 
 ### Configure Database Connection in `application.properties`
+
+```bash
 spring.datasource.url=jdbc:postgresql://localhost:5432/tiloscope 
 spring.datasource.username=tiloscope_user 
 spring.datasource.password=password 
 spring.datasource.driver-class-name=org.postgresql.Driver 
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+```
 
 
 
