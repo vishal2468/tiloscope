@@ -54,7 +54,7 @@ public class PlayerController {
     @PostMapping("/auth/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         Player authenticatedUser = authenticationService.authenticate(loginUserDto);
-        if (authenticatedUser.getTiles() != null) {
+        if (authenticatedUser.getTiles() == null || authenticatedUser.getTiles().isEmpty()) {
             authenticatedUser = playerService.assignTiles(authenticatedUser);
         }
         String jwtToken = jwtService.generateToken(new MyUserDetails(authenticatedUser));

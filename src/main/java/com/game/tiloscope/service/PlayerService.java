@@ -52,7 +52,11 @@ public class PlayerService {
         if (tiles.size() >= 10) {
             Collections.shuffle(tiles);
             List<Tile> assignedTiles = tiles.subList(0, 10);
+            assignedTiles.forEach(tile -> {
+                tile.getPlayers().add(player);
+            });
             player.setTiles(new HashSet<>(assignedTiles));
+            tileRepository.saveAll(assignedTiles);
         }
 
         return player;
