@@ -1,6 +1,5 @@
 package com.game.tiloscope.model.entity;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;

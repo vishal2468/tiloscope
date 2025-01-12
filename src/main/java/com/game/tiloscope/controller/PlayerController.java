@@ -3,6 +3,7 @@ package com.game.tiloscope.controller;
 import com.game.tiloscope.configuration.LoggedInUser;
 import com.game.tiloscope.model.entity.Player;
 import com.game.tiloscope.model.request.RegisterPlayerRequest;
+import com.game.tiloscope.model.request.UpdatePlayerRequest;
 import com.game.tiloscope.model.security.LoginResponse;
 import com.game.tiloscope.model.security.LoginUserDto;
 import com.game.tiloscope.model.security.MyUserDetails;
@@ -43,6 +44,11 @@ public class PlayerController {
             throw new RuntimeException("Player already exists with this email");
         }
         return playerService.createPlayer(registerRequestModel);
+    }
+
+    @PutMapping("/auth/player")
+    public Player updatePlayer(@RequestBody UpdatePlayerRequest updatePlayerRequest) {
+        return playerService.updatePlayer(updatePlayerRequest);
     }
 
     @PostMapping("/auth/login")

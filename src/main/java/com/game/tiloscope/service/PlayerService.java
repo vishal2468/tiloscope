@@ -3,6 +3,7 @@ package com.game.tiloscope.service;
 import com.game.tiloscope.model.entity.Player;
 import com.game.tiloscope.model.entity.Tile;
 import com.game.tiloscope.model.request.RegisterPlayerRequest;
+import com.game.tiloscope.model.request.UpdatePlayerRequest;
 import com.game.tiloscope.repository.PlayerRepository;
 import com.game.tiloscope.repository.TileRepository;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -57,7 +58,18 @@ public class PlayerService {
         return player;
 
     }
-    public List<Object[]> findPlayersByCumulativeLikes(){
+
+    public List<Object[]> findPlayersByCumulativeLikes() {
         return playerRepository.findPlayersByCumulativeLikes();
+    }
+
+    public Player updatePlayer(UpdatePlayerRequest updatePlayerRequest) {
+        Player player = playerRepository.findById(UUID.fromString(updatePlayerRequest.getId()))
+                .orElseThrow();
+        if(updatePlayerRequest.getName() != null) player.setName(updatePlayerRequest.getName());
+        if(updatePlayerRequest.getPassword() != null) player.setPassword(NoOpPasswordEncoder.getInstance().encode(updatePlayerRequest.getPassword()));
+        if(updatePlayerRequest.getPhotoUrl() != null) player.setPhotoUrl(updatePlayerRequest.getPhotoUrl());
+        if(updatePlayerRequest.getDescription() != null) player.setDescription(updatePlayerRequest.getDescription());
+        return playerRepository.save(player);
     }
 }
