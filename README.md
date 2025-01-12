@@ -1,4 +1,4 @@
-# Tiloscope
+# Tiloscope Service
 
 Tiloscope is a web application for creating, managing, and interacting with boards in a community-driven platform. It allows users to register, create boards, share them, upvote, and view user profiles. The application includes features like responsive design and quick loading, ensuring an optimal user experience.
 
