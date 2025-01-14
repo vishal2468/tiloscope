@@ -7,6 +7,7 @@ import com.game.tiloscope.model.entity.Player;
 import com.game.tiloscope.model.entity.PlayerBoard;
 import com.game.tiloscope.model.entity.PlayerBoardSquare;
 import com.game.tiloscope.model.entity.Square;
+import com.game.tiloscope.model.entity.Theme;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,10 +15,11 @@ import java.util.List;
 
 @Component
 public class PlayerBoardFactory {
-    public PlayerBoard createPlayerBoard(Player player , Board board){
+    public PlayerBoard createPlayerBoard(Player player , Board board , Theme theme){
         PlayerBoard playerBoard = new PlayerBoard();
         playerBoard.setPlayer(player);
         playerBoard.setBoard(board);
+        playerBoard.setTheme(theme);
         playerBoard.setPlayerBoardSquares(createPlayerBoardSquares(playerBoard, board));
         playerBoard.setLastUpdated(LocalDateTime.now());
         return playerBoard;

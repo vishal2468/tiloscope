@@ -2,8 +2,10 @@ package com.game.tiloscope.service;
 
 import com.game.tiloscope.factory.PlayerBoardFactory;
 import com.game.tiloscope.model.entity.*;
+import com.game.tiloscope.model.request.CreatePlayerBoardRequest;
 import com.game.tiloscope.repository.PlayerBoardRepository;
 import com.game.tiloscope.repository.PlayerBoardSquareRepository;
+import com.game.tiloscope.repository.ThemeRepository;
 import com.game.tiloscope.repository.TileRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,24 +23,27 @@ public class PlayerBoardService {
     private final PlayerBoardFactory playerBoardFactory;
     private final PlayerBoardSquareRepository playerBoardSquareRepository;
     private final TileRepository tileRepository;
+    private final ThemeRepository themeRepository;
 
 
     public PlayerBoardService(PlayerBoardRepository playerBoardRepository, PlayerService playerService,
                               BoardService boardService, PlayerBoardFactory playerBoardFactory, PlayerBoardSquareRepository playerBoardSquareRepository
-            , TileRepository tileRepository) {
+            , TileRepository tileRepository , ThemeRepository themeRepository) {
         this.playerBoardRepository = playerBoardRepository;
         this.playerService = playerService;
         this.boardService = boardService;
         this.playerBoardFactory = playerBoardFactory;
         this.playerBoardSquareRepository = playerBoardSquareRepository;
         this.tileRepository = tileRepository;
+        this.themeRepository = themeRepository;
 
     }
 
-    public PlayerBoard createPlayerBoard(String email, UUID boardId) {
+    public PlayerBoard createPlayerBoard(String email, CreatePlayerBoardRequest playerBoardRequest) {
         Player p = playerService.findByEmail(email).orElseThrow();
-        Board b = boardService.findById(boardId);
-        return playerBoardRepository.save(playerBoardFactory.createPlayerBoard(p, b));
+        Board b = boardService.findById(UUID.fromString(playerBoardRequest.getBoardId()));
+        Theme t = themeRepository.findById(UUID.fromString(playerBoardRequest.getThemeId())).orElseThrow();
+        return playerBoardRepository.save(playerBoardFactory.createPlayerBoard(p, b, t));
     }
 
     public PlayerBoard getPlayerBoard(UUID playerBoardId) {

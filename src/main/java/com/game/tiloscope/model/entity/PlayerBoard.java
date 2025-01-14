@@ -49,4 +49,8 @@ public class PlayerBoard {
     public int hashCode() {
         return Objects.hashCode(getId());
     }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "theme_id")
+    Theme theme;
 }

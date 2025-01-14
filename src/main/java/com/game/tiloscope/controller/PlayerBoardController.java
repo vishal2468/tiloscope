@@ -2,6 +2,7 @@ package com.game.tiloscope.controller;
 
 import com.game.tiloscope.configuration.LoggedInUser;
 import com.game.tiloscope.model.entity.*;
+import com.game.tiloscope.model.request.CreatePlayerBoardRequest;
 import com.game.tiloscope.model.request.PlayerBoardVisibilityRequest;
 import com.game.tiloscope.model.security.MyUserDetails;
 import com.game.tiloscope.repository.PlayerBoardRepository;
@@ -38,9 +39,9 @@ public class PlayerBoardController {
     /*
      * Create a player board using the boardId board template
      */
-    @PostMapping("/{boardId}")
-    public PlayerBoard createBoard(@PathVariable String boardId , @LoggedInUser MyUserDetails userDetails){
-        return playerBoardService.createPlayerBoard(userDetails.getUsername(), UUID.fromString(boardId));
+    @PostMapping
+    public PlayerBoard createBoard(@RequestBody CreatePlayerBoardRequest playerBoardRequest , @LoggedInUser MyUserDetails userDetails){
+        return playerBoardService.createPlayerBoard(userDetails.getUsername(), playerBoardRequest);
     }
 
     /*
