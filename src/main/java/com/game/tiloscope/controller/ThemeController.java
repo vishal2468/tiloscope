@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.game.tiloscope.model.entity.Theme;
 import com.game.tiloscope.model.request.CreateThemeRequest;
 import com.game.tiloscope.repository.ThemeRepository;
-
+import com.game.tiloscope.service.ThemeService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-
-
 
 @RestController
 @CrossOrigin
@@ -26,12 +24,11 @@ public class ThemeController {
 
     private ThemeRepository themeRepository;
 
-    private Theme currentTheme;
+    private ThemeService themeServivce;
 
-    private Date currentDate;
-
-    public ThemeController(ThemeRepository themeRepository){
+    public ThemeController(ThemeRepository themeRepository , ThemeService themeService){
         this.themeRepository = themeRepository;
+        this.themeServivce = themeService;
     }
 
     @PostMapping
@@ -43,19 +40,14 @@ public class ThemeController {
         return themeRepository.save(theme);
     }
 
+    @GetMapping
     public List<Theme> getAllTheme(){
         return themeRepository.findAll();
     }
 
     @GetMapping("/today")
     public Theme getTodayTheme(){
-        if(currentDate == null || currentDate.before(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)))){
-            currentDate = new Date();
-            List<Theme> themes = themeRepository.findAll();
-            Collections.shuffle(themes);
-            currentTheme = themes.get(0);
-        }
-        return currentTheme;
+        return themeServivce.getCurrentTheme();
     }
 
 }

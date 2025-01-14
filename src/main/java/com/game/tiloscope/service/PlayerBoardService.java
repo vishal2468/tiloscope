@@ -23,26 +23,26 @@ public class PlayerBoardService {
     private final PlayerBoardFactory playerBoardFactory;
     private final PlayerBoardSquareRepository playerBoardSquareRepository;
     private final TileRepository tileRepository;
-    private final ThemeRepository themeRepository;
-
+    private final ThemeService themeService;
 
     public PlayerBoardService(PlayerBoardRepository playerBoardRepository, PlayerService playerService,
-                              BoardService boardService, PlayerBoardFactory playerBoardFactory, PlayerBoardSquareRepository playerBoardSquareRepository
-            , TileRepository tileRepository , ThemeRepository themeRepository) {
+                              BoardService boardService, PlayerBoardFactory playerBoardFactory, 
+                              PlayerBoardSquareRepository playerBoardSquareRepository,
+                              ThemeService themeService
+            , TileRepository tileRepository) {
         this.playerBoardRepository = playerBoardRepository;
         this.playerService = playerService;
         this.boardService = boardService;
         this.playerBoardFactory = playerBoardFactory;
         this.playerBoardSquareRepository = playerBoardSquareRepository;
         this.tileRepository = tileRepository;
-        this.themeRepository = themeRepository;
-
+        this.themeService = themeService;
     }
 
     public PlayerBoard createPlayerBoard(String email, CreatePlayerBoardRequest playerBoardRequest) {
         Player p = playerService.findByEmail(email).orElseThrow();
         Board b = boardService.findById(UUID.fromString(playerBoardRequest.getBoardId()));
-        Theme t = themeRepository.findById(UUID.fromString(playerBoardRequest.getThemeId())).orElseThrow();
+        Theme t = themeService.getCurrentTheme();
         return playerBoardRepository.save(playerBoardFactory.createPlayerBoard(p, b, t));
     }
 
