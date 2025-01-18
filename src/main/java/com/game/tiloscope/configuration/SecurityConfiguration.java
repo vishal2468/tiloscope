@@ -37,6 +37,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/auth/**").permitAll() // Allow public access to `/auth/**`
                         .requestMatchers("/shareView/*").permitAll() // Allow public access to `/shareView/**`
+                        .requestMatchers("/swagger-ui/**").permitAll() // Allow public access to swagger resource
+                        .requestMatchers("/swagger-ui.html").permitAll() // Allow public access to swagger resource`
+                        .requestMatchers("/v3/api-docs/**").permitAll() // Allow public access to swagger resource`
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
